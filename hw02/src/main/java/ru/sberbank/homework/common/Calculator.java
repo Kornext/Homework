@@ -1,4 +1,4 @@
-package ru.sberbank.homework.your_lastname;
+package ru.sberbank.homework.common;
 
 /**
  * Вот такой простой интерфейс
@@ -10,7 +10,6 @@ public interface Calculator {
      * примеры команд:
      * 0345 * 0b10101
      * / 1.04
-     * quit
      *
      * @param userInput команда пользователя.
      * @return отформатированный результат вычисления
