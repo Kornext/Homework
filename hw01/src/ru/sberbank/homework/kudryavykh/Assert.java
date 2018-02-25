@@ -20,22 +20,4 @@ public class Assert {
             System.out.println("Test assertDouble successful" + message);
         }
     }
-
-    public static void assertDivisionByZero(int real)  {
-        if (real == 0) {
-            throw new AssertionError("Test assertDivisionByZero failed");
-        }
-        else {
-            System.out.println("Test assertDivisionByZero successful");
-        }
-    }
-
-    public static void assertDivisionByZero(double real)  {
-        if (real == 0) {
-            throw new AssertionError("Test assertDivisionByZero failed");
-        }
-        else {
-            System.out.println("Test assertDivisionByZero successful");
-        }
-    }
 }

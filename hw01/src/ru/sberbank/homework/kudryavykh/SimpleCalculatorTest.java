@@ -35,10 +35,23 @@ public class SimpleCalculatorTest {
     }
 
     public static void testIntDivisionZero(int one, int two) {
-        Assert.assertDivisionByZero(two);
+        try {
+            SimpleCalculator.divide(one, two);
+            System.out.println("Test IntDivisionByZero successful");
+        }
+        catch (ArithmeticException e) {
+            System.out.println("Test IntDivisionByZero failed");
+        }
     }
 
     public static void testDoubleDivisionZero(int one, double two) {
-        Assert.assertDivisionByZero(two);
+        try {
+            SimpleCalculator.divide(one, two);
+            System.out.println("Test DoubleDivisionByZero successful");
+        }
+        catch (ArithmeticException e) {
+            System.out.println("Test DoubleDivisionByZero failed");
+        }
+
     }
 }
