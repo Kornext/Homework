@@ -38,8 +38,7 @@ public class SimpleCalculatorTest {
         try {
             SimpleCalculator.divide(one, two);
             System.out.println("Test IntDivisionByZero successful");
-        }
-        catch (ArithmeticException e) {
+        } catch (ArithmeticException e) {
             System.out.println("Test IntDivisionByZero failed");
         }
     }
@@ -48,8 +47,7 @@ public class SimpleCalculatorTest {
         try {
             SimpleCalculator.divide(one, two);
             System.out.println("Test DoubleDivisionByZero successful");
-        }
-        catch (ArithmeticException e) {
+        } catch (ArithmeticException e) {
             System.out.println("Test DoubleDivisionByZero failed");
         }
 
