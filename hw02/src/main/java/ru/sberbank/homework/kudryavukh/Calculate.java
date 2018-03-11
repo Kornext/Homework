@@ -17,17 +17,17 @@ public class Calculate implements ru.sberbank.homework.common.Calculator {
         String value = "";
         inputText = previousResult + inputText;
         List<String> sArray = new ArrayList<>(Arrays.asList(inputText.split(" ")));
-        if(sArray.size() == 1) {
+        if (sArray.size() == 1) {
             return "error > wrong expression";
         }
-        if(firstAndLastIsOperator(sArray)) {
+        if (firstAndLastIsOperator(sArray)) {
             return "error > wrong expression";
         }
-        if(notContainsOperators(sArray)) {
+        if (notContainsOperators(sArray)) {
             return "error > wrong expression";
         }
         for (int i = 0; i < sArray.size(); ) {
-            value = Parse.validationEndParser(sArray.get(i));
+            value = Parse.validationAndParser(sArray.get(i));
             if (value == null) {
                 errorFlag = true;
                 value = sArray.get(i);
@@ -50,7 +50,7 @@ public class Calculate implements ru.sberbank.homework.common.Calculator {
         } else {
             return "error > " + value;
         }
-        if(sArray.size() == 2) {
+        if (sArray.size() == 2) {
             previousResult = parse.output(sArray.get(1)) + " ";
             return parse.output(sArray.get(1));
         }
@@ -61,8 +61,9 @@ public class Calculate implements ru.sberbank.homework.common.Calculator {
     /**
      * Метод проходит по всему массиву, ищет операторы и вычисляет подвыражения из двух операндов и оператора.
      * В параметры передаются пары операндов: '*' и '/' для первого прохода, '+' и '-' для второго.
+     *
      * @param sArray
-     * @param firstSymbol - символ + или *
+     * @param firstSymbol  - символ + или *
      * @param secondSymbol - символ - или /
      * @return
      */
@@ -72,15 +73,15 @@ public class Calculate implements ru.sberbank.homework.common.Calculator {
         for (int i = 1; i < sArray.size(); i++) {
             if (sArray.get(i).equals(firstSymbol) || sArray.get(i).equals(secondSymbol)) {
                 if (!neighborElementNotContainOperator(sArray, i)) {
-                        return "Ошибка ввода! Два знака подрят.";
+                    return "Ошибка ввода! Два знака подрят.";
                 }
                 OperationEnum operatEnum = OperationEnum.setValue(sArray.get(i).charAt(0));
-                if(operatEnum == null) {
+                if (operatEnum == null) {
                     throw new NullPointerException("Обьект Enum хранит null");
                 }
                 result = OperationEnum.getResult(operatEnum, Double.parseDouble(sArray.get(i - 1)),
                         Double.parseDouble(sArray.get(i + 1)));
-                if(result == null) {
+                if (result == null) {
                     return "Ошибка ввода!";
                 }
                 sArray.set(i, result);
@@ -94,6 +95,7 @@ public class Calculate implements ru.sberbank.homework.common.Calculator {
 
     /**
      * Проверяет соседние элементы оператора, точно ли они являются операндами.
+     *
      * @param sArray
      * @param index
      * @return
@@ -102,42 +104,49 @@ public class Calculate implements ru.sberbank.homework.common.Calculator {
 
         if (sArray.get(index - 1).equals("+")) {
             return false;
-        } else if (sArray.get(index - 1).equals("-")) {
-            return false;
-        } else if (sArray.get(index - 1).equals("*")) {
-            return false;
-        } else if (sArray.get(index - 1).equals("/")) {
-            return false;
-        } else if (sArray.get(index + 1).equals("+")) {
-            return false;
-        } else if (sArray.get(index + 1).equals("-")) {
-            return false;
-        } else if (sArray.get(index + 1).equals("*")) {
-            return false;
-        } else if (sArray.get(index + 1).equals("/")) {
-            return false;
-        } else {
-            return true;
         }
+        if (sArray.get(index - 1).equals("-")) {
+            return false;
+        }
+        if (sArray.get(index - 1).equals("*")) {
+            return false;
+        }
+        if (sArray.get(index - 1).equals("/")) {
+            return false;
+        }
+        if (sArray.get(index + 1).equals("+")) {
+            return false;
+        }
+        if (sArray.get(index + 1).equals("-")) {
+            return false;
+        }
+        if (sArray.get(index + 1).equals("*")) {
+            return false;
+        }
+        if (sArray.get(index + 1).equals("/")) {
+            return false;
+        }
+        return true;
     }
 
     /**
      * Проверяет, являются ли первый или последний элемент оператором +-/*
+     *
      * @param sArray
      * @return true -> первый или последний элемент - оператор
      */
     private boolean firstAndLastIsOperator(List<String> sArray) {
-        if(sArray.get(0).length() == 1) {
+        if (sArray.get(0).length() == 1) {
             char firstElement = sArray.get(0).charAt(0);
             OperationEnum operationEnum = OperationEnum.setValue(firstElement);
-            if(operationEnum != null) {
+            if (operationEnum != null) {
                 return true;
             }
         }
-        if(sArray.get(sArray.size() - 1).length() == 1) {
+        if (sArray.get(sArray.size() - 1).length() == 1) {
             char lastElement = sArray.get(sArray.size() - 1).charAt(0);
             OperationEnum operationEnum = OperationEnum.setValue(lastElement);
-            if(operationEnum != null) {
+            if (operationEnum != null) {
                 return true;
             }
         }
@@ -145,11 +154,11 @@ public class Calculate implements ru.sberbank.homework.common.Calculator {
     }
 
     private boolean notContainsOperators(List<String> sArray) {
-        for(int i = 0; i < sArray.size(); i++) {
-            if(sArray.get(i).length() == 1) {
+        for (int i = 0; i < sArray.size(); i++) {
+            if (sArray.get(i).length() == 1) {
                 char element = sArray.get(i).charAt(0);
                 OperationEnum operationEnum = OperationEnum.setValue(element);
-                if(operationEnum != null) {
+                if (operationEnum != null) {
                     return false;
                 }
             }

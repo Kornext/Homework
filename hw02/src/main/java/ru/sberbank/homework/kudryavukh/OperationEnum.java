@@ -20,7 +20,7 @@ public enum OperationEnum {
             case ADD:
                 return resultOperation = Double.toString(first + second);
             case DIVIDE:
-                if(second == 0) {
+                if (second == 0) {
                     return null;
                 } else {
                     return resultOperation = Double.toString(first / second);

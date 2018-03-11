@@ -9,14 +9,13 @@ import java.util.regex.Pattern;
 public class Parse {
 
     private static long decodeOnDecimal(String text) {
-        if(text.charAt(text.length()-1) == 'l') {
-            text = text.substring(0, text.length()-1);
+        if (text.charAt(text.length() - 1) == 'l') {
+            text = text.substring(0, text.length() - 1);
         }
-        if(text.startsWith("0b")||text.startsWith("+0b")||text.startsWith("-0b")) {
+        if (text.startsWith("0b") || text.startsWith("+0b") || text.startsWith("-0b")) {
             text = text.replaceFirst("0b", "");
             return Long.parseLong(text, 2);
-        }
-        else {
+        } else {
             return Long.decode(text);
         }
     }
@@ -27,25 +26,26 @@ public class Parse {
         return mat.matches();
     }
 
-    public String output (String value) {
+    public String output(String value) {
         String pattern = "###.##";
-        DecimalFormatSymbols decFormSymb = new DecimalFormatSymbols(Locale.US);
-        DecimalFormat decimformat = new DecimalFormat(pattern, decFormSymb);
+        DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(Locale.getDefault());
+        otherSymbols.setDecimalSeparator('.');
+        DecimalFormat decimformat = new DecimalFormat(pattern, otherSymbols);
         return decimformat.format(Double.parseDouble(value));
     }
-    
-    public static String validationEndParser(String word) {
+
+    public static String validationAndParser(String word) {
 
         word = word.toLowerCase();
         double number;
-        if(checkWithRegExp(word, "_{1}.*|.*_{1}|.*_{1}\\..*|.*\\._{1}.*|0b_.*|0_b.*|0x_.*|0_x.*|.*_l|.*_f")) {
+        if (checkWithRegExp(word, "_{1}.*|.*_{1}|.*_{1}\\..*|.*\\._{1}.*|0b_.*|0_b.*|0x_.*|0_x.*|.*_l|.*_f")) {
             return null; //Проверка валидности нижнего подчеркивания
         } else {
             word = underScoreRemove(word);
-            if (checkWithRegExp(word, "(-?|\\+?)([1-9][0-9]*|0)\\.[0-9]+")) { //проверка double
+            if (checkWithRegExp(word, "(-?|\\+?)[0-9]+\\.[0-9]+d?")) { //проверка double
                 number = Double.parseDouble(word);
                 return String.valueOf(number);
-            } else if (checkWithRegExp(word, "(-?|\\+?)[1-9][0-9]*\\.[0-9]+f|(-?|\\+?)[1-9][0-9]*f")) {
+            } else if (checkWithRegExp(word, "(-?|\\+?)[0-9]*\\.[0-9]+f|(-?|\\+?)[0-9]*f")) {
                 number = Float.parseFloat(word.substring(0, word.length() - 1)); //Проверка float литерала
                 return String.valueOf(number);
             } else if (checkWithRegExp(word,
