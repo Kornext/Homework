@@ -6,12 +6,15 @@ public class Main {
 
     public static void main(String[] args) {
 
-        PluginManager pluginManager = new PluginManager("resources");
+        String pathToRoot = "C:\\Users\\Kornext_N\\Desktop\\Test\\Homework\\hw05\\src\\main\\resources";
+        PluginManager pluginManager = new PluginManager(pathToRoot);
         try {
             Plugin plugin = pluginManager.loadPlugin("FirstTestPlugin");
+            plugin.run(null);
         } catch (PluginNotFoundException e) {
             e.printStackTrace();
         }
+
 
     }
 }
