@@ -22,15 +22,6 @@ public class ServiceTest {
     @Before
     public void pre() {
 
-//        Map<String, Integer> routeMap = new HashMap<>();
-//
-//        routeMap.put("Saint-Petersburg-Berlin", 1);
-//        routeMap.put("Minsk-Sverdlovsk", 2);
-//
-//        System.out.println(routeMap.get("Saint-Petersburg-Berlin"));
-
-
-
         //routeService = new KryoRouteService();
         //routeService = new InMemoryRouteService(() -> "C:\\temp\\");
         CachePathProvider path = new CacheImpl("D:\\temp");
@@ -43,14 +34,14 @@ public class ServiceTest {
         long startTime = System.currentTimeMillis();
         Route<? extends City> route1 = routeService.getRoute("Saint-Petersburg", "Berlin");
         long endTime = System.currentTimeMillis() - startTime;
-        //System.out.println("Serial " + route1 + " (" + endTime + ")");
+        System.out.println("Serial " + route1 + " (" + endTime + ")");
         if (!routeService.isDevMode()) {
             assertTrue(endTime >= 2000);
         }
         startTime = System.currentTimeMillis();
         Route<? extends City> route2 = routeService.getRoute("Minsk", "Sverdlovsk");
         endTime = System.currentTimeMillis() - startTime;
-        //System.out.println("Serial " + route2 + " (" + endTime + ")");
+        System.out.println("Serial " + route2 + " (" + endTime + ")");
         if (!routeService.isDevMode()) {
             assertTrue(endTime >= 2000);
         }
@@ -58,7 +49,7 @@ public class ServiceTest {
         startTime = System.currentTimeMillis();
         Route<? extends City> deSerializedRoute1 = routeService.getRoute("Saint-Petersburg", "Berlin");
         endTime = System.currentTimeMillis() - startTime;
-        //System.out.println("Deserial " + deSerializedRoute1 + " (" + endTime + ")");
+        System.out.println("Deserial " + deSerializedRoute1 + " (" + endTime + ")");
         assertTrue(endTime < 100);
 
         compareCities(deSerializedRoute1.getCities(), route1.getCities());
@@ -78,7 +69,7 @@ public class ServiceTest {
             City city = unCached.get(i);
             City city1 = cached.get(i);
             boolean equals = city.compare(city1);
-            //System.out.println(city + (equals ? " == " : " != ") + city1);
+            System.out.println(city + (equals ? " == " : " != ") + city1);
             assertTrue(equals);
         }
     }
