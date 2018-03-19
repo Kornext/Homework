@@ -30,6 +30,7 @@ public class PluginManager {
     public Plugin loadPlugin(String pluginName) throws PluginNotFoundException {
         //TODO implement
         File[] filesOnPluginDir = new File[0];
+        //Проверка, существует ли дирректория и файл.
         try {
             Path path = Paths.get(rootDirectory + "\\" + pluginName);
             if (!Files.exists(path)) {
@@ -48,7 +49,7 @@ public class PluginManager {
         }
 
         for(int i=0; i<filesOnPluginDir.length; i++) {
-            ClassLoader cl = new PluginClassloader(filesOnPluginDir[i].getPath());
+            ClassLoader cl = new PluginClassloader(filesOnPluginDir[i].getPath(), this.getClass().getClassLoader());
             String nameClass = getNameClass(filesOnPluginDir[i].getPath());
             try {
                 return (Plugin) Class.forName(nameClass, true, cl).newInstance();

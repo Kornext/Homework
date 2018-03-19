@@ -25,6 +25,7 @@ public class PluginClassloader extends ClassLoader {
 
     @Override
     protected Class<?> findClass(String name) throws ClassNotFoundException {
+        //Проверка есть ли имя класса в кеше
         if(cach.contains(name)) {
             try {
                 throw new ClassNameAlreadyExistException("Класс с данным именем уже загружен!");
@@ -32,14 +33,30 @@ public class PluginClassloader extends ClassLoader {
                 e.getMessage();
             }
         }
+
         byte[] byteClass = new byte[0];
+
+        //
         try {
             byteClass = Files.readAllBytes(Paths.get(new File(pathClass).toURI()));
             cach.add(name);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return defineClass(name, byteClass, 0, byteClass.length);
+        return getaClass(name, byteClass);
+    }
+
+    private Class<?> getaClass(String name, byte[] byteClass) {
+        try {
+            return defineClass(name, byteClass, 0, byteClass.length);
+        }catch (Throwable e){
+            try {
+                return super.findClass(name);
+            } catch (ClassNotFoundException e1) {
+                e1.printStackTrace();
+            }
+        }
+        return null;
     }
 
     class ClassNameAlreadyExistException extends Exception {
