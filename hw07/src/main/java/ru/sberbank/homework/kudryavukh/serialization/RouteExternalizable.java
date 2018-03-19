@@ -4,6 +4,8 @@ import ru.sberbank.homework.common.City;
 import ru.sberbank.homework.common.Route;
 
 import java.io.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RouteExternalizable<T extends City> extends Route<T> implements Externalizable {
@@ -11,6 +13,7 @@ public class RouteExternalizable<T extends City> extends Route<T> implements Ext
     static final long serialVersionUID = 10275531232837495L;
 
     public RouteExternalizable() {
+
     }
 
     public RouteExternalizable(String routeName, List<T> cities) {
@@ -21,27 +24,37 @@ public class RouteExternalizable<T extends City> extends Route<T> implements Ext
     @Override
     public void writeExternal(ObjectOutput out) throws IOException {
         out.writeObject(getRouteName());
-        out.writeObject(getCities());
+        out.writeInt(getCities().size());
+        for (City c : getCities()) {
+            out.writeInt(c.getId());
+            out.writeObject(c.getCityName());
+            out.writeObject(c.getFoundDate());
+            out.writeLong(c.getNumberOfInhabitants());
+            out.writeObject(c.getNearCities());
+        }
+        //out.writeObject(getCities());
     }
+
 
     @Override
     public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
         setRouteName((String) in.readObject());
-        setCities((List<T>) in.readObject());
+        int size = in.readInt();
+        List<City> city = new ArrayList<>(size);
+        for (int i = 0; i < size; i++) {
+            int id = in.readInt();
+            String cityName = (String) in.readObject();
+            LocalDate foundDate = (LocalDate) in.readObject();
+            long numberOfInhabitants = in.readLong();
+            List<City> nearCities = (List<City>) in.readObject();
+            city.add(new City(id, cityName, foundDate, numberOfInhabitants, nearCities));
+        }
+        setCities((List<T>) city);
+        //setCities((List<T>) in.readObject());
     }
 
     @Override
     public String toString() {
         return super.toString();
     }
-
-//    private void writeObject(ObjectOutputStream oos) throws IOException {
-//        oos.writeObject(getRouteName());
-//        oos.writeObject(getCities());
-//    }
-//
-//    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
-//        setRouteName((String) ois.readObject());
-//        setCities((List<T>) ois.readObject());
-//    }
 }
