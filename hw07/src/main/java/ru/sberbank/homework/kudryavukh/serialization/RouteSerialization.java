@@ -10,6 +10,7 @@ import java.util.List;
 
 public class RouteSerialization<T extends City> extends Route<T> implements Serializable {
 
+    static final long serialVersionUID = 10275539472837495L;
     public RouteSerialization(String routeName, List<T> cities) {
         super(routeName, cities);
     }

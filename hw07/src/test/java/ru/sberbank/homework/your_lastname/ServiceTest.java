@@ -2,10 +2,13 @@ package ru.sberbank.homework.your_lastname;
 
 import org.junit.Before;
 import org.junit.Test;
+import ru.sberbank.homework.common.CachePathProvider;
 import ru.sberbank.homework.common.City;
 import ru.sberbank.homework.common.Route;
 import ru.sberbank.homework.common.RouteService;
-import ru.sberbank.homework.your_lastname.serialization.InMemoryRouteService;
+import ru.sberbank.homework.kudryavukh.serialization.CacheImpl;
+import ru.sberbank.homework.kudryavukh.serialization.Externaliz;
+import ru.sberbank.homework.kudryavukh.serialization.Serialization;
 
 import java.util.List;
 
@@ -18,10 +21,19 @@ public class ServiceTest {
     @Before
     public void pre() {
         //routeService = new KryoRouteService();
-        routeService = new InMemoryRouteService(() -> "C:\\temp\\");
     }
 
     @Test
+    public void startTest() {
+        CachePathProvider cachePathProvider = new CacheImpl("D:\\temp");
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!SERIALIZABLE!!!!!!!!!!!!!!!!!!!!!!");
+        routeService = new Serialization(cachePathProvider, false);
+        testExampleRouteService();
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!EXTERNALIZABLE!!!!!!!!!!!!!!!!!!!!!!");
+        routeService = new Externaliz(cachePathProvider, false);
+        testExampleRouteService();
+    }
+
     public void testExampleRouteService() {
         long startTime = System.currentTimeMillis();
         Route<? extends City> route1 = routeService.getRoute("Saint-Petersburg", "Berlin");
