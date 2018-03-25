@@ -8,7 +8,7 @@ import java.util.function.Predicate;
  */
 public class CollectionUtils {
 
-    //Super - ограничени снизу  , cunsumers / write
+    //Super - ограничени снизу  , consumers / write
     //Extends - ограничение сверху, produced / read
 
     public static <T> void addAll(List<? extends T> source, List<? super T> destination) {
@@ -67,7 +67,7 @@ public class CollectionUtils {
     }
 
 
-    public static <T> List<T> range (List<? extends T> list, T min, T max, Comparator<? super T> comparator) {
+    public static <T> List<T> range(List<? extends T> list, T min, T max, Comparator<? super T> comparator) {
 
         List<T> newList = new LinkedList<>();
         for(T element:list) {

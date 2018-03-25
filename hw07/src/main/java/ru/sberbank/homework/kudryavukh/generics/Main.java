@@ -21,47 +21,5 @@ public class Main {
         countMap.addAll(countMap);
         System.out.println("Размер CountMap после добавления другого контейнера = " + countMap.size());
         Map mapTemp = countMap.toMap();
-        ASD<B> asd = new ASD<>(new B());
-        ASD<C> asd2 = new ASD<>(new C());
-        asd.tre(new C());
-        List<? extends B> qwe = new ArrayList<B>(); //B C D
-        //qwe.add(new B());
-
-        //B c = fdsfsd(qwe, new B());
-
-
     }
 }
-
-class ASD <T extends B> {
-    T ob;
-
-    public ASD(T ob) {
-        this.ob = ob;
-    }
-
-    public void tre(T asd) {
-        if(this.ob.equals(asd)) {
-
-        }
-
-    }
-
-}
-
-class A {
-
-}
-class B extends A implements X {
-
-}
-class C extends B {
-
-}
-class D extends C {
-
-}
-interface X {
-
-}
-
