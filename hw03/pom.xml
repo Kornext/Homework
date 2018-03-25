@@ -17,8 +17,6 @@
         <junit.version>4.12</junit.version>
     </properties>
 
-    <!--3.8.2 -->
-
     <repositories>
         <repository>
             <id>id</id>
