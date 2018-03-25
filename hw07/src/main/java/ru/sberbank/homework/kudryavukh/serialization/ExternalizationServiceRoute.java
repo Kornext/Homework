@@ -6,26 +6,28 @@ import java.io.*;
 import java.time.LocalDate;
 import java.util.*;
 
-public class Externaliz extends RouteService<City, Route<City>> {
+public class ExternalizationServiceRoute extends RouteService<City, Route<City>> {
 
-    private Map<String, Route<City>> routeMap = new HashMap<>();
+    private List<String> routeMap = new ArrayList<>();
 
 
-    public Externaliz(CachePathProvider pathProvider, boolean devMode) {
+    public ExternalizationServiceRoute(CachePathProvider pathProvider, boolean devMode) {
+
         super(pathProvider, devMode);
     }
 
     @Override
     public Route<City> getRoute(String from, String to) {
         String key = from + " - " + to;
-        Route<City> route = routeMap.get(key);
-        if (route == null) {
-            RouteExternalizable routeSerial = (RouteExternalizable) super.getRoute(from, to);
-            routeMap.put(key, routeSerial);
+        Route<City> route = null;
+        if(routeMap.contains(key)) {
+            return route = deserialize(key);
+        }
+        else {
+            RouteExternalizable<City> routeSerial = (RouteExternalizable<City>) super.getRoute(from, to);
+            routeMap.add(key);
             serialize(key, routeSerial);
             return routeSerial;
-        } else {
-            return route = deserialize(key);
         }
     }
 

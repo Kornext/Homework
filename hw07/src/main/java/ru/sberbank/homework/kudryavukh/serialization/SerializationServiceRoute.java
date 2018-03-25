@@ -6,26 +6,28 @@ import java.io.*;
 import java.time.LocalDate;
 import java.util.*;
 
-public class Serialization extends RouteService<City, Route<City>> {
+public class SerializationServiceRoute extends RouteService<City, Route<City>> {
 
-    private Map<String, Route<City>> routeMap = new HashMap<>();
+    private List<String> routeMap = new ArrayList<>();
 
 
-    public Serialization(CachePathProvider pathProvider, boolean devMode) {
+
+    public SerializationServiceRoute(CachePathProvider pathProvider, boolean devMode) {
         super(pathProvider, devMode);
     }
 
     @Override
     public Route<City> getRoute(String from, String to) {
         String key = from + " - " + to;
-        Route<City> route = routeMap.get(key);
-        if (route == null) {
+        Route<City> route = null;
+        if(routeMap.contains(key)) {
+            return route = deserialize(key);
+        }
+        else {
             RouteSerialization routeSerial = (RouteSerialization) super.getRoute(from, to);
-            routeMap.put(key, routeSerial);
+            routeMap.add(key);
             serialize(key, routeSerial);
             return routeSerial;
-        } else {
-            return route = deserialize(key);
         }
     }
 

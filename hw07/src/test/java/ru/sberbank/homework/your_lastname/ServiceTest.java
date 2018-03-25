@@ -7,8 +7,8 @@ import ru.sberbank.homework.common.City;
 import ru.sberbank.homework.common.Route;
 import ru.sberbank.homework.common.RouteService;
 import ru.sberbank.homework.kudryavukh.serialization.CacheImpl;
-import ru.sberbank.homework.kudryavukh.serialization.Externaliz;
-import ru.sberbank.homework.kudryavukh.serialization.Serialization;
+import ru.sberbank.homework.kudryavukh.serialization.ExternalizationServiceRoute;
+import ru.sberbank.homework.kudryavukh.serialization.SerializationServiceRoute;
 
 import java.util.List;
 
@@ -27,10 +27,10 @@ public class ServiceTest {
     public void startTest() {
         CachePathProvider cachePathProvider = new CacheImpl("D:\\temp");
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!SERIALIZABLE!!!!!!!!!!!!!!!!!!!!!!");
-        routeService = new Serialization(cachePathProvider, false);
+        routeService = new SerializationServiceRoute(cachePathProvider, false);
         testExampleRouteService();
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!EXTERNALIZABLE!!!!!!!!!!!!!!!!!!!!!!");
-        routeService = new Externaliz(cachePathProvider, false);
+        routeService = new ExternalizationServiceRoute(cachePathProvider, false);
         testExampleRouteService();
     }
 
