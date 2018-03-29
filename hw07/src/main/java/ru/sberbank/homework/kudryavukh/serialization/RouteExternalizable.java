@@ -26,14 +26,16 @@ public class RouteExternalizable<T extends City> extends Route<T> implements Ext
         out.writeObject(getRouteName());
         out.writeInt(getCities().size());
         for (City c : getCities()) {
+            CityExternalizable cc = (CityExternalizable) c;
+            out.writeObject(cc);
+
 //            out.writeInt(c.getId());
 //            out.writeObject(c.getCityName());
 //            out.writeObject(c.getFoundDate());
 //            out.writeLong(c.getNumberOfInhabitants());
 //            out.writeObject(c.getNearCities());
-            out.writeObject(c);
+//            out.writeObject(c);
         }
-
         //out.writeObject(getCities());
     }
 
@@ -44,13 +46,16 @@ public class RouteExternalizable<T extends City> extends Route<T> implements Ext
         int size = in.readInt();
         List<City> city = new ArrayList<>(size);
         for (int i = 0; i < size; i++) {
+            City c = (City) in.readObject();
+            city.add(c);
 //            int id = in.readInt();
 //            String cityName = (String) in.readObject();
 //            LocalDate foundDate = (LocalDate) in.readObject();
 //            long numberOfInhabitants = in.readLong();
 //            List<City> nearCities = (List<City>) in.readObject();
-////            city.add(new City(id, cityName, foundDate, numberOfInhabitants, nearCities));
-            city.add((City) in.readObject());
+//            city.add(new City(id, cityName, foundDate, numberOfInhabitants, nearCities));
+//            city.add((City) in.readObject());
+
         }
         setCities((List<T>) city);
         //setCities((List<T>) in.readObject());
