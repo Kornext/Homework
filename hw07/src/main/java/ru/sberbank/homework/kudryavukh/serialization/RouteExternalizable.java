@@ -33,15 +33,7 @@ public class RouteExternalizable<T extends City> extends Route<T> implements Ext
             out.writeObject(cc.getFoundDate());
             out.writeLong(cc.getNumberOfInhabitants());
             out.writeObject(cc.getNearCities());
-
-//            out.writeInt(c.getId());
-//            out.writeObject(c.getCityName());
-//            out.writeObject(c.getFoundDate());
-//            out.writeLong(c.getNumberOfInhabitants());
-//            out.writeObject(c.getNearCities());
-//            out.writeObject(c);
         }
-        //out.writeObject(getCities());
     }
 
 
@@ -58,21 +50,8 @@ public class RouteExternalizable<T extends City> extends Route<T> implements Ext
             c.setNumberOfInhabitants(in.readLong());
             c.setNearCities((List<City>)in.readObject());
             city.add(c);
-            System.out.println(c.getCityName());
-            System.out.println(c.getId());
-            System.out.println(c.getFoundDate());
-            System.out.println(c.getNumberOfInhabitants());
-//            int id = in.readInt();
-//            String cityName = (String) in.readObject();
-//            LocalDate foundDate = (LocalDate) in.readObject();
-//            long numberOfInhabitants = in.readLong();
-//            List<City> nearCities = (List<City>) in.readObject();
-//            city.add(new City(id, cityName, foundDate, numberOfInhabitants, nearCities));
-//            city.add((City) in.readObject());
-
         }
         setCities((List<T>) city);
-        //setCities((List<T>) in.readObject());
     }
 
     @Override

@@ -10,7 +10,5 @@ public class MainTest {
         City firstCity = new City(1, "Donetsk", LocalDate.now(), 500_500);
         CachePathProvider cachePathProvider = new CacheImpl("C://TestSer");
         SerializationServiceRoute ser = new SerializationServiceRoute(cachePathProvider, false);
-
-
     }
 }

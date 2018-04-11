@@ -10,8 +10,6 @@ public class SerializationServiceRoute extends RouteService<City, Route<City>> {
 
     private List<String> routeMap = new ArrayList<>();
 
-
-
     public SerializationServiceRoute(CachePathProvider pathProvider, boolean devMode) {
         super(pathProvider, devMode);
     }

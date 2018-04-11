@@ -26,9 +26,9 @@ public class ServiceTest {
     @Test
     public void startTest() {
         CachePathProvider cachePathProvider = new CacheImpl("D:\\temp");
-//        System.out.println("!!!!!!!!!!!!!!!!!!!!!!SERIALIZABLE!!!!!!!!!!!!!!!!!!!!!!");
-//        routeService = new SerializationServiceRoute(cachePathProvider, false);
-//        testExampleRouteService();
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!SERIALIZABLE!!!!!!!!!!!!!!!!!!!!!!");
+        routeService = new SerializationServiceRoute(cachePathProvider, false);
+        testExampleRouteService();
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!EXTERNALIZABLE!!!!!!!!!!!!!!!!!!!!!!");
         routeService = new ExternalizationServiceRoute(cachePathProvider, false);
         testExampleRouteService();
@@ -63,12 +63,12 @@ public class ServiceTest {
 
         compareCities(deSerializedRoute1.getCities(), route1.getCities());
 
-//        startTime = System.currentTimeMillis();
-//        Route<? extends City> deSerializedRoute2 = routeService.getRoute("Minsk", "Sverdlovsk");
-//        endTime = System.currentTimeMillis() - startTime;
-//        System.out.println(deSerializedRoute2 + " (" + endTime + ")");
-//        assertTrue(endTime < 100);
-//        compareCities(deSerializedRoute2.getCities(), route2.getCities());
+        startTime = System.currentTimeMillis();
+        Route<? extends City> deSerializedRoute2 = routeService.getRoute("Minsk", "Sverdlovsk");
+        endTime = System.currentTimeMillis() - startTime;
+        System.out.println(deSerializedRoute2 + " (" + endTime + ")");
+        assertTrue(endTime < 100);
+        compareCities(deSerializedRoute2.getCities(), route2.getCities());
 
     }
 
