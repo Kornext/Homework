@@ -47,16 +47,9 @@ public class PluginManager {
             System.out.println(e.getMessage());
         }
 
-        //Папка корректна с именем плагина
-        //Файлы/файл там есть
-        //Проблема - файлов в листе нет.
 
         for (int i = 0; i < filesOnPluginDir.length; i++) {
-            //ClassLoader cl = new PluginClassloader(filesOnPluginDir[i].getPath(), this.getClass().getClassLoader());
-            String s = cutClassName(filesOnPluginDir[i].getPath());
 
-
-            //ClassLoader customeClassloader = new PluginClassloader(filesOnPluginDir[i].getPath());
             ClassLoader customeClassloader = new PluginClassloader(filesOnPluginDir[i].getPath());
             String nameClass = getNameClass(filesOnPluginDir[i].getPath());
             try {
@@ -78,12 +71,6 @@ public class PluginManager {
         lastIndex = path.lastIndexOf('.');
         firstIndex = path.lastIndexOf('\\');
         return path.substring(firstIndex + 1, lastIndex);
-    }
-
-    public static String cutClassName(String path) {
-        int lastindex = path.lastIndexOf('\\');
-        String s = path.substring(0, lastindex);
-        return s;
     }
 
     class FolderNotFoundException extends Exception {

@@ -14,10 +14,7 @@ import java.util.Map;
 
 public class PluginClassloader extends ClassLoader {
 
-    //private static List<String> cach = new ArrayList<>();
-
     private static Map<String, Class> cach = new HashMap<>();
-
     private String pathClass;
 
     public PluginClassloader(String pathClass) {
@@ -53,18 +50,18 @@ public class PluginClassloader extends ClassLoader {
         //return getaClass(name, byteClass);
     }
 
-    private Class<?> getaClass(String name, byte[] byteClass) {
-        try {
-            return defineClass(name, byteClass, 0, byteClass.length);
-        } catch (Throwable e) {
-            try {
-                return super.findClass(name);
-            } catch (ClassNotFoundException e1) {
-                e1.printStackTrace();
-            }
-        }
-        return null;
-    }
+//    private Class<?> getaClass(String name, byte[] byteClass) {
+//        try {
+//            return defineClass(name, byteClass, 0, byteClass.length);
+//        } catch (Throwable e) {
+//            try {
+//                return super.findClass(name);
+//            } catch (ClassNotFoundException e1) {
+//                e1.printStackTrace();
+//            }
+//        }
+//        return null;
+//    }
 
     class ClassNameAlreadyExistException extends Exception {
         public ClassNameAlreadyExistException(String message) {
