@@ -28,8 +28,6 @@ public class PluginClassloader extends ClassLoader {
 
     @Override
     protected Class<?> findClass(String name) throws ClassNotFoundException {
-        System.out.println("Name" + name);
-        System.out.println("PathClass" + pathClass);
 
         Class classs = cach.get(name);
         if (classs != null) { //Проверка есть ли имя класса в кеше
