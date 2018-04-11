@@ -25,9 +25,14 @@ public class RouteExternalizable<T extends City> extends Route<T> implements Ext
     public void writeExternal(ObjectOutput out) throws IOException {
         out.writeObject(getRouteName());
         out.writeInt(getCities().size());
-        for (City c : getCities()) {
-            CityExternalizable cc = (CityExternalizable) c;
+        for (City c : getCities()) {                           //на этапе записи
+            CityExternalizable cc = new CityExternalizable(c);
             out.writeObject(cc);
+            out.writeInt(cc.getId());
+            out.writeObject(cc.getCityName());
+            out.writeObject(cc.getFoundDate());
+            out.writeLong(cc.getNumberOfInhabitants());
+            out.writeObject(cc.getNearCities());
 
 //            out.writeInt(c.getId());
 //            out.writeObject(c.getCityName());
@@ -46,8 +51,17 @@ public class RouteExternalizable<T extends City> extends Route<T> implements Ext
         int size = in.readInt();
         List<City> city = new ArrayList<>(size);
         for (int i = 0; i < size; i++) {
-            City c = (City) in.readObject();
+            CityExternalizable c = (CityExternalizable) in.readObject();
+            c.setId(in.readInt());
+            c.setCityName((String) in.readObject());
+            c.setFoundDate((LocalDate) in.readObject());
+            c.setNumberOfInhabitants(in.readLong());
+            c.setNearCities((List<City>)in.readObject());
             city.add(c);
+            System.out.println(c.getCityName());
+            System.out.println(c.getId());
+            System.out.println(c.getFoundDate());
+            System.out.println(c.getNumberOfInhabitants());
 //            int id = in.readInt();
 //            String cityName = (String) in.readObject();
 //            LocalDate foundDate = (LocalDate) in.readObject();
