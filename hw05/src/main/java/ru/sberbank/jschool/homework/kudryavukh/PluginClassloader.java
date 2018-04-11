@@ -1,16 +1,22 @@
 package ru.sberbank.jschool.homework.kudryavukh;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PluginClassloader extends ClassLoader {
 
-    private static List<String> cach = new ArrayList<>();
+    //private static List<String> cach = new ArrayList<>();
+
+    private static Map<String, Class> cach = new HashMap<>();
 
     private String pathClass;
 
@@ -25,31 +31,32 @@ public class PluginClassloader extends ClassLoader {
 
     @Override
     protected Class<?> findClass(String name) throws ClassNotFoundException {
-        //Проверка есть ли имя класса в кеше
-        if(cach.contains(name)) {
-            try {
-                throw new ClassNameAlreadyExistException("Класс с данным именем уже загружен!");
-            } catch (ClassNameAlreadyExistException e) {
-                e.getMessage();
-            }
+        System.out.println("Name" + name);
+        System.out.println("PathClass" + pathClass);
+
+        Class classs = cach.get(name);
+        if (classs != null) { //Проверка есть ли имя класса в кеше
+            return classs;
         }
+
 
         byte[] byteClass = new byte[0];
 
-        //
         try {
             byteClass = Files.readAllBytes(Paths.get(new File(pathClass).toURI()));
-            cach.add(name);
+            classs = defineClass(name, byteClass, 0, byteClass.length);
+            cach.put(name, classs);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return getaClass(name, byteClass);
+        return classs;
+        //return getaClass(name, byteClass);
     }
 
     private Class<?> getaClass(String name, byte[] byteClass) {
         try {
             return defineClass(name, byteClass, 0, byteClass.length);
-        }catch (Throwable e){
+        } catch (Throwable e) {
             try {
                 return super.findClass(name);
             } catch (ClassNotFoundException e1) {

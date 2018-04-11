@@ -6,7 +6,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        String pathToRoot = "C:\\Users\\Kornext_N\\Desktop\\Test\\Homework\\hw05\\src\\main\\resources";
+        String pathToRoot = "C:\\Users\\Kornext_N\\Desktop\\Java HW\\Homework\\hw05\\src\\main\\resources";
         PluginManager pluginManager = new PluginManager(pathToRoot);
         try {
             Plugin plugin = pluginManager.loadPlugin("FirstTestPlugin");
